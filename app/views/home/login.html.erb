@@ -1,0 +1,159 @@
+<!-- Panel -->
+<div id="toppanel">
+	<div id="panel">
+		<div class="content clearfix">
+			<div class="left">
+				<h1><img src="/assets/onopia_rev-small.png" /></h1>
+				<h2>Utilisation</h2>		
+				<p class="grey">
+				  Si vous possédez un compte, identifiez depuis le formulaire 
+				  <b>Accès Client</b>. 
+				  Dans le cas contraire, n'hésitez pas à ouvrir un compte : 
+				  c'est <b>gratuit</b>.</p>
+				<h2>Une plateforme sécurisée</h2>
+				<p class="grey">Le site est entièrement sécurisé. 
+				Les accès aux données bancaires se font uniquement en lecture seule.
+				</p>
+			</div>
+			<div class="left">
+			  <div id="new_user_session">
+			    <%= render  :partial => 'user_sessions/new', 
+			                :locals => {:user_session => @user_session} %>
+			  </div>	
+			  <%= link_to "Mot de passe oublié?", 
+			             new_user_reset_password_path, 
+			             :remote => true %>
+			</div>	
+			<div class="left right" id="new_user" id="new_user_session">	
+			  <%= render :partial => 'users/new', :locals => {:user => @user} %>
+			</div>
+		</div>
+	</div> <!-- /login -->	
+
+    <!-- The tab on top -->	
+	<div class="tab">
+		<ul class="login">
+	    	<li class="left">&nbsp;</li>
+	        <li>Bienvenue!</li>
+			<li class="sep">|</li>
+			<li id="toggle">
+				<a id="open" class="open" href="#">Connexion | Inscription</a>
+				<a id="close" style="display: none;" class="close" href="#">
+				  Fermer
+				</a>	
+			</li>
+	    	<li class="right">&nbsp;</li>
+		</ul> 
+	</div> <!-- / top -->
+	
+</div> <!--panel -->
+
+<div class="welcome">
+  <h1>Rejoignez le réseau <span>onopia.com</span>, <br/>une nouvelle façon de <span>gérer son argent</span> au quotidien</h1>
+  <center><img src="/assets/onopia.png" /></center>
+</div>
+
+<div id="debug" style="width: 50%; height: 10%">
+</div>
+
+<div id="main">
+</div>
+
+<div id="browsers">
+  <div class="info">Votre navigateur est trop ancien. Nous vous invitons à installer et utiliser un des navigateurs de dernière génération ci-dessous :</div>
+  <ul>
+   <li>
+    <div class="browser">
+     <img src="/assets/logos/chrome_logo.png" />
+     <div>Chrome 4.1</div>
+     <div><a href="">Télécharger</a></div>
+    </div>
+   </li>
+   <li>
+    <div class="browser">
+     <img src="/assets/logos/firefox_logo.png" />
+     <div>Firefox 3.6</div>
+     <div><a href="">Télécharger</a></div>
+    </div>
+   </li>
+   <li>
+    <div class="browser">
+     <img src="/assets/logos/ie8_logo.png" />
+     <div>IE 8.0</div>
+     <div><a href="">Télécharger</a></div>
+    </div>
+   </li>
+   <li>
+    <div class="browser">
+     <img src="/assets/logos/safari_logo.png" />
+     <div>Safari 4.0</div>
+     <div><a href="">Télécharger</a></div>
+    </div>
+   </li>
+   <li>
+    <div class="browser">
+     <img src="/assets/logos/opera_logo.png" />
+     <div>Opera 10.53</div>
+     <div><a href="">Télécharger</a></div>
+    </div>
+   </li>
+  </ul>
+  <div style="clear: both;"></div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    $("#form-register").submit( function(event) {
+      $("#loading").show();
+      $.ajax( {
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function( content, status, xhr ) {
+	      $("#loading").hide();
+          $("#debug").html( content );
+        }
+      });
+      return false;
+    });
+    if ( jQuery.browser.msie && parseInt(jQuery.browser.version)<=6 ) { 
+       $('#main').show();
+       $('#browsers').show();
+    }
+  });
+</script>
+<div id="user_reset_password"></div>
+<% if @show_user_reset_password %>
+  <% if @user_reset_password %>
+    <% content_for :javascript do %>
+      <script type="text/javascript">
+        $("#user_reset_password")
+          .html('<%= escape_javascript(
+                      render( :partial => 'user_reset_passwords/edit', 
+                              :locals => { :user=> @user_reset_password })) %>');
+        $("#user_reset_password").wijdialog({
+          autoOpen: true,
+          width: 400,
+          height: 200,
+          title: "Rappel du mot de passe",
+          captionButtons: {
+            pin: { visible: false },
+            refresh: { visible: false },
+            toggle: { visible: false },
+            minimize: { visible: false },
+            maximize: { visible: false }
+          }
+        });
+        $("#user_reset_password_password").wijtextbox();
+        $("#user_reset_password_submit").button();
+      </script>
+    <% end %>
+  <% else %>
+    <% content_for :javascript do %>
+      <script type="text/javascript">
+        showMessage("Une erreur c'est produite", "Désolé, nous n'avons pas pu trouvé votre compte.\nVeuillez recommencer le processus.")
+      </script>
+    <% end %>
+  <% end %>
+<% end %>
+

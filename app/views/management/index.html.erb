@@ -1,0 +1,32 @@
+<%= render :partial => 'shared/menu', :locals => { :position => 1 } %>
+
+<% content_for(:javascript_library) do %>
+  <%= javascript_include_tag('datatables', 'management') %>
+<% end %>
+
+<div class="expander">
+  <h3>Votre compte</h3>
+  <div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="list-records">
+      <thead>
+	      <tr>
+		      <th width="12%">Date</th>
+		      <th width="70%">Libellé</th>
+		      <th width="8%">Montant</th>
+		      <th width="10%">Categorie</th>
+	      </tr>
+      </thead>
+      <tbody>
+	
+      </tbody>
+      <tfoot>
+	      <tr>
+		      <th>Date</th>
+		      <th>Libellé</th>
+		      <th>Montant</th>
+		      <th>Categorie</th>
+	      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

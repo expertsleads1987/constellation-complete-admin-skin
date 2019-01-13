@@ -1,0 +1,8 @@
+showMessage("Information", "Votre compte a été correctement paramétré.");
+$.ajax({
+    url: '<%= url_for :controller => :banks, :action => :index %>'
+});
+
+$("#index_account").html("<%= escape_javascript(render('accounts/index')) %>");
+
+

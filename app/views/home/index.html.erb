@@ -1,0 +1,60 @@
+<% content_for :stylesheet_link_tag do %>
+  <%= stylesheet_link_tag 'home' %>
+<% end %>
+<%= render :partial => 'shared/menu', :locals => { :position => 0 } %>
+
+<% content_for :javascript do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".expander").wijexpander();
+		  $("#tabs").wijtabs();
+      $("#tabs").wijtabs({
+        select: function (e, ui) {
+          window.changeYear(ui.tab.innerText)
+        }
+      })
+    });
+  </script>
+<% end %>
+
+<table width="100%">
+  <tr>
+    <td width="200px" style="vertical-align:top;">
+      <div class="expander">
+        <h3>Météo</h3>
+        <div>
+          Emplacement pour la météo des comptes
+        </div>
+      </div>
+      <div class="expander">
+        <h3>Nouvelles</h3>
+        <div>
+          Place pour les nouvelles
+        </div>
+      </div>
+    </td>
+    <td width="60%">    
+      <div>
+        <div id="tabs">
+			    <ul>
+			      <% @current_user.years_with_records.each do |year| %>
+				      <li><a href="#tabs-1"><%= year %></a></li>
+			      <% end %>
+			    </ul>
+			    <div id="tabs-1">
+			    </div>
+			    <div id="tabs-2">
+			    </div>
+			    <div id="tabs-3">
+			    </div>
+			  <div>
+			   <%= render :partial => 'shared/stats', 
+				            :locals => { 
+				              :year => @current_user.years_with_records[0]
+				            } %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+

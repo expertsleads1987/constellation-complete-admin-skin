@@ -1,0 +1,17 @@
+$("#index_bank").html("<%= escape_javascript(render('banks/index')) %>")
+$("#index_bank").wijdialog({
+  autoOpen: true,
+  height: 400,
+  width: 840,
+  modal: true,
+  captionButtons: {
+      pin: { visible: false },
+      refresh: { visible: false },
+      toggle: { visible: false },
+      minimize: { visible: false },
+      maximize: { visible: false }
+  }
+});
+updateStyles();
+$("#index_bank").css("display", "block");
+

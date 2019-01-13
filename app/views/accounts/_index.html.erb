@@ -1,0 +1,15 @@
+<%= stylesheet_link_tag 'accounts' %>
+<br/>
+<% @current_user.accounts.each do |account| %>
+  <% if account.bank.icon %>
+    <%= image_tag account.bank.icon %>
+  <% end %>
+  <%= account.bank.label %> 
+  <%= link_to "Supprimer", 
+              account_path(account), 
+              :confirm => "Êtes vous sûre?", 
+              :method => :delete, 
+              :id => 'destroy_account', 
+              :remote => true %>
+  <br/>
+<% end %>
